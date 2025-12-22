@@ -4,7 +4,6 @@ import removeMultiSpace from './plugins/remove-multi-space.js';
 
 const cartSchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     userId: { type: mongoose.Types.ObjectId, require: true },
     items: {
       type: [{

@@ -39,8 +39,6 @@ const productVariantSchema = new Schema({
 }, { timestamps: true, versionKey: false });
 
 const productSchema = new Schema({
-  _id: mongoose.Types.ObjectId,
-
   name: { type: String, trim: true, required: true, minLength: 6, maxLength: 255 },
   slug: { type: String, slug: "name", slugPaddingSize: 2, unique: true },
 

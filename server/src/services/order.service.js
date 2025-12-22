@@ -60,9 +60,9 @@ function formatResult(record) {
 /**
  * Create new order with transaction
  * TODO: must run a mongodb replica set if connection to mongodb at localhost
- * @param {*} orderData 
+ * @param {*} orderData
  * @param {*} createdBy
- * @returns 
+ * @returns
  */
 async function createWithTransaction(orderData, createdBy) {
   const session = await mongoose.startSession();
@@ -271,9 +271,9 @@ async function tryCreate(customerInfo, orderData, createdBy) {
 /**
  * Create new order
  * @param {string | object} customerInfo - userId or { name, phone }
- * @param {*} orderData - 
+ * @param {*} orderData -
  * @param {*} createdBy
- * @returns 
+ * @returns
  */
 async function create(customerInfo, orderData, createdBy) {
   if (mongoose.Types.ObjectId.isValid(customerInfo)) {
@@ -313,8 +313,134 @@ async function create(customerInfo, orderData, createdBy) {
   //   throw ApiErrorUtils.simple('Invalid address', 400);
   // }
 
-  const order = await createWithTransaction(orderData, createdBy);
+  // Use non-transaction version for standalone MongoDB (development)
+  const USE_TRANSACTIONS = process.env.MONGODB_USE_TRANSACTIONS === 'true';
+
+  const order = USE_TRANSACTIONS
+    ? await createWithTransaction(orderData, createdBy)
+    : await createWithoutTransaction(orderData, createdBy);
   return order;
+}
+
+/**
+ * Create new order WITHOUT transaction (for standalone MongoDB)
+ * @param {*} orderData
+ * @param {*} createdBy
+ * @returns
+ */
+async function createWithoutTransaction(orderData, createdBy) {
+  try {
+    const orderToSave = new Order({
+      ...orderData,
+      items: [],
+      createdBy,
+    });
+
+    for (let i = 0; i < orderData.items.length; i++) {
+      const cartItem = orderData.items[i];
+
+      const product = await Product.findOne(
+        { _id: cartItem.productId, 'variants.sku': cartItem.sku }
+      ).lean().exec();
+
+      if (!product || product?.variants?.length === 0) {
+        throw new ApiErrorUtils({
+          message: 'Product does not exist',
+          errors: { productId: cartItem.productId, sku: cartItem.sku },
+          status: 404
+        });
+      }
+
+      const selectedVariant = product.variants.find(variant => variant.sku === cartItem.sku);
+      if (!selectedVariant) {
+        throw new ApiErrorUtils({
+          message: 'Product does not exist',
+          errors: { productId: cartItem.productId, sku: cartItem.sku },
+          status: 404
+        });
+      }
+
+      if (selectedVariant.sold + cartItem.qty > selectedVariant.quantity) {
+        throw new ApiErrorUtils({
+          message: 'Product out of stock',
+          errors: { productId: product._id, sku: product.variants[0].sku },
+          status: 404
+        });
+      }
+
+      // update sold (without session)
+      await Product.findOneAndUpdate(
+        { _id: cartItem.productId, 'variants.sku': cartItem.sku },
+        { $inc: { 'variants.$.sold': cartItem.qty } }
+      );
+
+      orderToSave.items.push({
+        productId: product._id.toString(),
+        sku: product.variants[0].sku,
+        productName: product.name,
+        variantName: selectedVariant.variantName,
+        thumbnail: selectedVariant.thumbnail,
+        marketPrice: selectedVariant.marketPrice,
+        pricePerUnit: selectedVariant.price,
+        quantity: cartItem.qty,
+      });
+    }
+
+    // calculate total
+    const subTotal = orderToSave.items.reduce((acc, cur) => {
+      return acc + cur.quantity * cur.pricePerUnit;
+    }, 0);
+
+    let discount = 0;
+    if (orderData.discountCode) {
+      try {
+        const { amount, info: discountInfo } = await discountService.calculateDiscountAmt(orderData.discountCode, subTotal);
+        discount = amount;
+        if (!(discountInfo?.unlimitedQty || false)) {
+          await Discount.findByIdAndUpdate(
+            discountInfo._id,
+            { $inc: { 'quantity': -1 } }
+          );
+        }
+      } catch { }
+    }
+
+    if (!discount || discount === undefined || isNaN(discount)) { discount = 0; }
+
+    let shippingFee;
+    if (subTotal > 500000 || orderData?.isReceiveAtStore) {
+      shippingFee = 0;
+    } else if (orderData?.address?.province?.toUpperCase().includes('HỒ CHÍ MINH')) {
+      shippingFee = 20000;
+    } else {
+      shippingFee = 30000;
+    }
+
+    orderToSave.subTotal = subTotal;
+    orderToSave.shippingFee = shippingFee;
+    orderToSave.discount = discount;
+    orderToSave.total = subTotal + shippingFee - discount;
+
+    orderToSave.status = constants.ORDER.STATUS.PENDING;
+    orderToSave.paymentStatus = constants.ORDER.PAYMENT_STATUS.PENDING;
+
+    if (orderToSave.isReceiveAtStore) {
+      orderToSave.address = null;
+    }
+
+    const order = await orderToSave.save();
+    return order;
+  } catch (err) {
+    if (err instanceof ApiErrorUtils) {
+      throw err;
+    } else {
+      throw new ApiErrorUtils({
+        message: 'Create order failed: ' + err.message,
+        errors: err,
+        status: 500
+      });
+    }
+  }
 }
 
 async function update(userId, orderId, data) {

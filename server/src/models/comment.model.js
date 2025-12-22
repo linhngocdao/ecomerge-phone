@@ -10,7 +10,6 @@ const autoPopulateReplies = function (next) {
 
 const commentSchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
 
     // pass author value if logged in otherwise user info (name, email, phone, etc)

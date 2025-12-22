@@ -198,15 +198,15 @@ async function deleteProductVariants(identity, sku) {
 /**
  * Get list products
  * @param {String} fields - Fields to get
- * @param {Number} limit 
- * @param {Number} page 
+ * @param {Number} limit
+ * @param {Number} page
  * @param {Object} filter
- * @param {String} sortBy 
- * @param {-1 | 1} sortType 
- * @param {Boolean} getCategoryFilter 
- * @param {Boolean} getBrandFilter 
- * @param {Boolean} isShowHidden 
- * @returns 
+ * @param {String} sortBy
+ * @param {-1 | 1} sortType
+ * @param {Boolean} getCategoryFilter
+ * @param {Boolean} getBrandFilter
+ * @param {Boolean} isShowHidden
+ * @returns
  */
 async function getAllProducts(options = {}) {
   let {
@@ -420,14 +420,10 @@ async function createProduct(data) {
 
   categoryService.incCountProduct(categoryId);
   brandService.incCountProduct(brandId);
-  return product.save().then(p => p.populate(POPULATE_OPTS).lean().exec());
 
-  // const newProduct = new Product({
-  //   _id: new mongoose.Types.ObjectId(),
-  //   ...product,
-  // });
-  // const productSearch = await newProduct.save();
-  // return Product.findById(productSearch._id).populate(POPULATE_OPTS).lean().exec();
+  const savedProduct = await product.save();
+  await savedProduct.populate(POPULATE_OPTS);
+  return savedProduct.toObject();
 }
 
 async function updateProduct(identity, data) {

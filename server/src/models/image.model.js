@@ -3,7 +3,6 @@ import removeMultiSpace from './plugins/remove-multi-space.js';
 
 const imageSchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     dirPath: { type: String, trim: true, required: true },
     ext: { type: String, trim: true, required: true },
     original: { type: String, trim: true, required: true },

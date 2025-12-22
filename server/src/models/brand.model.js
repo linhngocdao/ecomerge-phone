@@ -4,7 +4,6 @@ import removeMultiSpace from './plugins/remove-multi-space.js';
 
 const brandSchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     order: { type: Number, require: true },
 
     name: { type: String, trim: true, required: true },

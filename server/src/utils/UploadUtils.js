@@ -4,16 +4,16 @@ import path from 'path';
 import StringUtils from './StringUtils.js';
 
 const ROOT_UPLOAD_PATH = './public/uploads';
-const MAX_UPLOAD_FILE_SIZE = 1024 * 1024;
+const MAX_UPLOAD_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 if (!fs.existsSync(ROOT_UPLOAD_PATH)) { fs.mkdirSync(ROOT_UPLOAD_PATH); }
 
 class UploadUtils {
   /**
    * Get Multer instance
-   * 
-   * @param {String}        customPath 
-   * @param {allowedMimes}  allowedMimes 
+   *
+   * @param {String}        customPath
+   * @param {allowedMimes}  allowedMimes
    * @param {Number}        filePerReq Maximum number of parts (non-file fields + files). (Default: 1)
    * @returns Multer instance that provides several methods for generating
    * middleware that process files uploaded in `multipart/form-data` format.
@@ -42,7 +42,8 @@ class UploadUtils {
           cb(null, true);
         } else {
           // throw error for invalid files
-          cb(new Error('Invalid file type'));
+          console.error(`Invalid file type: ${file.mimetype}. Allowed types:`, allowedMimes);
+          cb(new Error(`Invalid file type: ${file.mimetype}`));
         }
       };
     }
@@ -56,7 +57,7 @@ class UploadUtils {
         if (req?.file?.path) {
           req.body[field] = '/' + StringUtils.replaceAll(req?.file?.path, '\\', '/');
         }
-      } else if (Array.isArray(field)) {  // multiple files upload 
+      } else if (Array.isArray(field)) {  // multiple files upload
         for (let i = 0; i < field.length; i++) {
           const f = field[i];
           if (req?.files?.[f.name] && req?.files?.[f.name].length > 0) {
@@ -77,7 +78,7 @@ class UploadUtils {
       if (req?.file?.path) {
         files.push(req.body[field]);
       }
-    } else if (Array.isArray(field)) {  // multiple files upload 
+    } else if (Array.isArray(field)) {  // multiple files upload
       for (let i = 0; i < field.length; i++) {
         const f = field[i];
         if (req.body[f.name] && req.body[f.name].length > 0 && Array.isArray(req.body[f.name])) {

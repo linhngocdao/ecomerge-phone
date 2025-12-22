@@ -5,7 +5,6 @@ import removeMultiSpace from './plugins/remove-multi-space.js';
 
 const discountSchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     name: { type: String, trim: true, required: true },
     slug: { type: String, slug: "name", slugPaddingSize: 2, unique: true },
     desc: { type: String, trim: true, required: false },

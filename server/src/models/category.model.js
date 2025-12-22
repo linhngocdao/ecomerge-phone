@@ -23,7 +23,6 @@ const autoPopulateChildren = function (next) {
 
 const categorySchema = mongoose.Schema(
   {
-    _id: mongoose.Types.ObjectId,
     order: { type: Number, require: true },
 
     name: { type: String, trim: true, required: true },
