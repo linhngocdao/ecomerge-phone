@@ -38,7 +38,10 @@ import { MIconButton } from '../../../components/@material-extend';
 import useLocales from '../../../hooks/useLocales';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
-import { firebaseUploadMultiple, firebaseUploadSingle } from '../../../helper/firebaseHelper';
+import {
+  uploadSingleFile as firebaseUploadSingle,
+  uploadMultipleFiles as firebaseUploadMultiple
+} from '../../../helper/uploadHelper';
 
 // ----------------------------------------------------------------------
 

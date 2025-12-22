@@ -46,7 +46,7 @@ export default function AuthWithSocial({ isLogin }) {
     <>
       <Stack direction="row" spacing={2}>
         <GoogleLogin
-          clientId="235569401328-lib09fjkc10r16r6mbscljl4ulb5049q.apps.googleusercontent.com"
+          clientId={108979140618268332858}
           render={(renderProps) => (
             <Button
               fullWidth

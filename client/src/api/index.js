@@ -1,13 +1,12 @@
 import axios from 'axios';
 
+// Single API instance for v2 endpoints (unified)
 const API = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api/v2'
-  // withCredentials: true,
-  // credentials: 'include'
 });
 
-// Add a request interceptor
-API.interceptors.request.use((req) => {
+// Add request interceptor
+const requestInterceptor = (req) => {
   // Add Header Authorization
   const accessToken = localStorage.getItem('accessToken');
   if (accessToken) {
@@ -25,31 +24,29 @@ API.interceptors.request.use((req) => {
   req.headers.uid = uid;
 
   return req;
-});
+};
 
-// Add a response interceptor
-axios.interceptors.response.use(
-  // eslint-disable-next-line arrow-body-style
-  (res) => {
-    // do something with response data
-    return res;
-  },
-  (err) => {
-    if (err.response.status === 401 || err.response.status === 403) {
-      localStorage.removeItem('accessToken');
-      window.location.href = '/login';
-    }
+API.interceptors.request.use(requestInterceptor);
+
+// Add response interceptor
+const responseErrorHandler = (err) => {
+  if (err.response?.status === 401 || err.response?.status === 403) {
+    localStorage.removeItem('accessToken');
+    window.location.href = '/login';
   }
-);
+  return Promise.reject(err);
+};
+
+API.interceptors.response.use((res) => res, responseErrorHandler);
 
 export const apiInstance = API;
 
-// ----------------------------Auth------------------------------------
+// ----------------------------Auth (v2)------------------------------------
 
 // if user exist then login otherwise signup
 export const googleOAuth = (googleCredential) => API.post('/auth/google', { googleCredential });
 
-export const register = (data) => API.post('/auth/login', data);
+export const register = (data) => API.post('/auth/register', data);
 export const login = (username, password) => API.post('/auth/login', { username, password });
 export const logout = (refreshToken) => API.post('/auth/logout', { refreshToken });
 export const sendEmailOtp = (email) => API.post('/auth/send-otp', { email });
