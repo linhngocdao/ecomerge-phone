@@ -28,7 +28,7 @@ import { UploadSingleFile } from '../../../components/upload';
 import { varFadeInUp, MotionInView } from '../../../components/animate';
 import useLocales from '../../../hooks/useLocales';
 import { createCategory, updateCategory } from '../../../redux/slices/categorySlice';
-import { firebaseUploadSingle } from '../../../helper/firebaseHelper';
+import { uploadSingleFile } from '../../../helper/uploadHelper';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
 
@@ -102,9 +102,9 @@ export default function StaffForm({ currentId, open, setOpen }) {
       return;
     }
 
-    firebaseUploadSingle(
+    uploadSingleFile(
       uploadImage,
-      'categories',
+      'brands',
       setUploadPercent,
       (error) => {
         enqueueSnackbar(error, {

@@ -25,7 +25,7 @@ import { UploadMultiFile, UploadSingleFile } from '../../../components/upload';
 import useLocales from '../../../hooks/useLocales';
 import { MIconButton } from '../../../components/@material-extend';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
-import { firebaseUploadMultiple, firebaseUploadSingle } from '../../../helper/firebaseHelper';
+import { uploadSingleFile, uploadMultipleFiles } from '../../../helper/uploadHelper';
 import { createProductVariant, getProductById, updateProductVariant } from '../../../redux/slices/productSlice';
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -201,7 +201,7 @@ export default function ProductVariantForm({ currentVariant, currentProductId, o
           return true;
         }
       }
-      firebaseUploadSingle(
+      uploadSingleFile(
         uploadImage,
         'products',
         setUploadPercent,
@@ -239,7 +239,7 @@ export default function ProductVariantForm({ currentVariant, currentProductId, o
   const handleUploadMultiple = async () => {
     const urlsPicturesNew = [];
     if (values.pictures) {
-      firebaseUploadMultiple(
+      uploadMultipleFiles(
         values.pictures,
         'products',
         setUploadPercent,

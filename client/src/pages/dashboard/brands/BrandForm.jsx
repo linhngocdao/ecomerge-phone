@@ -34,7 +34,7 @@ import { MotionInView, varFadeInUp } from '../../../components/animate';
 import { MIconButton, MRadio } from '../../../components/@material-extend';
 // others
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
-import { firebaseUploadSingle } from '../../../helper/firebaseHelper';
+import { uploadSingleFile } from '../../../helper/uploadHelper';
 
 // ----------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ export default function BrandForm({ currentId, open, setOpen }) {
       return;
     }
 
-    firebaseUploadSingle(
+    uploadSingleFile(
       uploadImage,
       'brands',
       setUploadPercent,
@@ -154,7 +154,7 @@ export default function BrandForm({ currentId, open, setOpen }) {
     name: Yup.string()
       .trim()
       .required(t('dashboard.brands.name-validation'))
-      .min(6, t('dashboard.brands.name-validation-len'))
+      .min(2, t('dashboard.brands.name-validation-len'))
       .max(25, t('dashboard.brands.name-validation-len'))
   });
   const formik = useFormik({

@@ -33,7 +33,7 @@ import { UploadSingleFile } from '../../../components/upload';
 import { varFadeInUp, MotionInView } from '../../../components/animate';
 import LoadingScreen from '../../../components/LoadingScreen';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
-import { firebaseUploadSingle } from '../../../helper/firebaseHelper';
+import { uploadSingleFile } from '../../../helper/uploadHelper';
 
 // ----------------------------------------------------------------------
 
@@ -111,9 +111,9 @@ export default function CategoryForm({ currentId, open, setOpen }) {
       return;
     }
 
-    firebaseUploadSingle(
+    uploadSingleFile(
       uploadImage,
-      'categories',
+      'brands',
       setUploadPercent,
       (error) => {
         enqueueSnackbar(error, {
