@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { verify, sign } from 'jsonwebtoken';
+// import { verify, sign } from 'jsonwebtoken';
 
 // ----------------------------------------------------------------------
 
@@ -40,4 +40,4 @@ const setSession = (accessToken, refreshToken) => {
   }
 };
 
-export { isValidToken, setSession, verify, sign };
+export { isValidToken, setSession };

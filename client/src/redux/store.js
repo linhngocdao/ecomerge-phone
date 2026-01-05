@@ -4,7 +4,7 @@
 
 // // enable redux dev tools in development mode
 // const composeEnhancers =
-//   process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+//   import.meta.env.DEV ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
 // // use redux-thunk as middleware
 // const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware));
@@ -21,7 +21,7 @@ const middleware = (getDefaultMiddleware) => {
     serializableCheck: false
   });
 
-  if (process.env.NODE_ENV === `development`) {
+  if (import.meta.env.DEV) {
     middlewares = middlewares.concat(logger);
   }
   return middlewares;

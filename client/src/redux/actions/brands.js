@@ -1,7 +1,7 @@
 // import * as actionTypes from '../../constants/actionTypes';
 // import * as api from '../../api';
 
-// const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+// const isDev = import.meta.env.DEV;
 
 // export const getAllBrands = (isSimple) => async (dispatch) => {
 //   try {

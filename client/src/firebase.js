@@ -12,7 +12,9 @@ import 'firebase/storage';
 //   appId: '',
 //   measurementId: ''
 // };
-const firebaseConfig = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG);
+const firebaseConfigString = import.meta.env.REACT_APP_FIREBASE_CONFIG;
+const firebaseConfig = firebaseConfigString ? JSON.parse(firebaseConfigString) : null;
+
 if (!firebaseConfig) {
   console.error('Please set up your firebase config in .env file');
 }

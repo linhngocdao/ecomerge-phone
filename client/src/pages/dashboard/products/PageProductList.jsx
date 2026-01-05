@@ -20,10 +20,10 @@ import {
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 //
-import { Link as RouterLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 //
 import { useLocales } from '../../../hooks';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -110,11 +110,11 @@ export default function PageProductList() {
     dispatch(toggleHideProduct(id));
   };
 
-  const handleDeleteProduct = (id, slug) => {
+  const handleDeleteProduct = (id) => {
     try {
       dispatch(deleteProduct(id));
       enqueueSnackbar(t('products.delete'), { variant: 'success' });
-      const index = selected.indexOf(slug);
+      const index = selected.indexOf(id);
       selected.splice(index, 1);
     } catch (e) {
       enqueueSnackbar(t('products.error'), { variant: 'error' });
@@ -127,9 +127,21 @@ export default function PageProductList() {
     setSortBy(property);
   };
 
+  const handleDeleteSelected = () => {
+    try {
+      selected.forEach((id) => {
+        dispatch(deleteProduct(id));
+      });
+      setSelected([]);
+      enqueueSnackbar(t('products.delete'), { variant: 'success' });
+    } catch (e) {
+      enqueueSnackbar(t('products.error'), { variant: 'error' });
+    }
+  };
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = productsList.map((n) => n.slug);
+      const newSelected = productsList.map((n) => n._id);
       setSelected(newSelected);
       if (selected.count === 1) {
         setCurrentId(productsList[productsList.indexOf(selected[0])]._id);
@@ -139,12 +151,12 @@ export default function PageProductList() {
     setSelected([]);
   };
 
-  const handleClick = (event, slug) => {
-    const selectedIndex = selected.indexOf(slug);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, slug);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -168,7 +180,7 @@ export default function PageProductList() {
     setIsCompact(event.target.checked);
   };
 
-  const isSelected = (slug) => selected.indexOf(slug) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty productsList.
   const emptyRows =
@@ -199,7 +211,7 @@ export default function PageProductList() {
           {productsList.map((row, index) => {
             const { _id, slug, name, brand, category, isHide, createdAt } = row;
             const thumbnail = row?.variants[0]?.thumbnail;
-            const isItemSelected = isSelected(slug);
+            const isItemSelected = isSelected(_id);
             const labelId = `enhanced-table-checkbox-${index}`;
 
             return (
@@ -210,7 +222,7 @@ export default function PageProductList() {
                 tabIndex={-1}
                 key={_id}
                 selected={isItemSelected}
-                onClick={(event) => handleClick(event, slug)}
+                onClick={(event) => handleClick(event, _id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox checked={isItemSelected} />
@@ -315,6 +327,7 @@ export default function PageProductList() {
             onCategoryChange={(newValue) => setCategoryFilter(newValue)}
             onBrandChange={(newValue) => setBrandFilter(newValue)}
             onChangeShowHidden={(newValue) => setShowHidden(newValue)}
+            onDelete={handleDeleteSelected}
           />
 
           <Scrollbar>

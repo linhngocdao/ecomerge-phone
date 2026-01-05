@@ -1,31 +1,31 @@
-import * as Yup from 'yup';
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 // material
-import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 import {
-  Card,
-  Chip,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  Autocomplete,
-  FormHelperText,
-  Link,
-  Button
+    Autocomplete,
+    Button,
+    Card,
+    Chip,
+    FormHelperText,
+    Grid,
+    Link,
+    Stack,
+    TextField,
+    Typography
 } from '@material-ui/core';
+import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { QuillEditor } from '../../../components/editor';
-import { PATH_DASHBOARD } from '../../../routes/paths';
 import useLocales from '../../../hooks/useLocales';
 import { getAllBrands } from '../../../redux/slices/brandSlice';
 import { getAllCategories } from '../../../redux/slices/categorySlice';
-import { getProductById, updateProduct } from '../../../redux/slices/productSlice';
+import { getProductById, getProductDashboard, updateProduct } from '../../../redux/slices/productSlice';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 
 const TAGS_OPTION = [
@@ -92,11 +92,13 @@ export default function PageProductEdit() {
     return !!(values.brand && values.category);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (validationCustomer()) {
       const productData = handleAddDataForProduct();
       if (currentProduct) {
-        dispatch(updateProduct(currentProduct._id, productData));
+        await dispatch(updateProduct(currentProduct._id, productData));
+        // Fetch lại dữ liệu dashboard để đảm bảo list được cập nhật
+        await dispatch(getProductDashboard('', 1, 10, 'desc', 'createdAt', '', '', false));
         enqueueSnackbar(`Update product ${currentProduct.name} successfully!`, {
           variant: 'success'
         });

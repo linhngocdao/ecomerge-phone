@@ -1,9 +1,9 @@
 // icon
+import closeCircleFill from '@iconify/icons-eva/close-circle-fill';
 import editFill from '@iconify/icons-eva/edit-fill';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import searchFill from '@iconify/icons-eva/search-fill';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import closeCircleFill from '@iconify/icons-eva/close-circle-fill';
 import { Icon } from '@iconify/react';
 // material
 import {
@@ -23,7 +23,7 @@ import {
 import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 //
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useLocales from '../../../hooks/useLocales';
 
@@ -69,7 +69,9 @@ export default function ProductTableToolbar({
   onSearch,
   onCategoryChange,
   onBrandChange,
-  onChangeShowHidden
+
+  onChangeShowHidden,
+  onDelete
 }) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
@@ -129,13 +131,13 @@ export default function ProductTableToolbar({
     setShowHidden(event.target.checked);
   };
 
-  const handleChangeCategoryFilter = (event, value) => {
+  const handleChangeCategoryFilter = (_event, value) => {
     if (value) {
       setSelectedCategory(value);
     }
   };
 
-  const handleChangeBrandFilter = (event, value) => {
+  const handleChangeBrandFilter = (_event, value) => {
     if (value) {
       setSelectedBrand(value);
     }
@@ -233,7 +235,7 @@ export default function ProductTableToolbar({
             </>
           )}
           <Tooltip title="Delete">
-            <IconButton>
+            <IconButton onClick={onDelete}>
               <Icon icon={trash2Fill} />
             </IconButton>
           </Tooltip>

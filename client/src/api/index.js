@@ -1,9 +1,14 @@
+
 import axios from 'axios';
+
+const API_BASE_URL = '/api/v2';
 
 // Single API instance for v2 endpoints (unified)
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api/v2'
+  baseURL: API_BASE_URL
 });
+
+console.log('DEBUG: API_BASE_URL is:', API_BASE_URL);
 
 // Add request interceptor
 const requestInterceptor = (req) => {

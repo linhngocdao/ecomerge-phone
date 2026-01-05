@@ -41,7 +41,7 @@ export default function PhoneInputForm({ onOtpSent, onGoBack }) {
 
   const formik = useFormik({
     initialValues: {
-      phone: process.env.NODE_ENV === 'development' ? '+84123456789' : ''
+      phone: import.meta.env.DEV ? '+84123456789' : ''
     },
     validationSchema: PhoneInputSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {

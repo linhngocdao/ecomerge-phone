@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api/v2';
+const API_BASE_URL = '/api/v2';
 
 /**
  * Upload single file to backend (local storage)
@@ -73,12 +73,12 @@ export const uploadSingleFile = (file, folder, onProgress, onError, onSuccess) =
 /**
  * Upload multiple files to backend (local storage)
  * @param {File[]} files - Array of File objects
- * @param {string} folder - Folder name
+ * @param {string} _folder - Folder name
  * @param {function} onProgress - Progress callback
  * @param {function} onError - Error callback
  * @param {function} onSuccess - Success callback with array of URLs
  */
-export const uploadMultipleFiles = (files, folder, onProgress, onError, onSuccess) => {
+export const uploadMultipleFiles = (files, _folder, onProgress, onError, onSuccess) => {
   if (!files || files.length === 0) {
     if (onSuccess) onSuccess([]);
     return;

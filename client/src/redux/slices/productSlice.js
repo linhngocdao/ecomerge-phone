@@ -77,7 +77,8 @@ const productSlice = createSlice({
       state.error = null;
     },
     createSuccess(state, action) {
-      state.list.push(action.payload.data);
+      state.list.unshift(action.payload.data);
+      state.dashboard.list.unshift(action.payload.data);
       state.isLoading = false;
       state.error = null;
     },
@@ -95,12 +96,10 @@ const productSlice = createSlice({
       );
     },
     deleteSuccess(state, action) {
-      return {
-        ...state,
-        list: state.list.filter((p) => p._id !== action.payload._id),
-        isLoading: false,
-        error: null
-      };
+      state.list = state.list.filter((p) => p._id !== action.payload);
+      state.dashboard.list = state.dashboard.list.filter((p) => p._id !== action.payload);
+      state.isLoading = false;
+      state.error = null;
     },
     createVariantSuccess(state, action) {
       return { ...state, list: [action.payload.data, ...state.list], error: null };
@@ -222,10 +221,15 @@ export const getProductById = (id) => async (dispatch) => {
 export const createProduct = (newProduct) => async (dispatch) => {
   try {
     dispatch(actions.startLoading());
+    console.log('Creating product with data:', newProduct);
     const { data } = await api.createProduct(newProduct);
+    console.log('Product created successfully:', data);
     dispatch(actions.createSuccess(data));
+    return data; // Return data để có thể check trong component
   } catch (e) {
+    console.error('Error in createProduct:', e);
     dispatch(actions.hasError(e));
+    throw e; // Throw lại error để component có thể catch
   }
 };
 

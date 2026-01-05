@@ -1,7 +1,7 @@
 import * as actionTypes from '../../constants/actionTypes';
 import { orderManager as apiOrderMgr } from '../../api';
 
-const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const isDev = import.meta.env.DEV;
 
 const handleError = (dispatch, e, logTag) => {
   console.error(`[actions]${logTag} error`, e?.response?.data || e);
