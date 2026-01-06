@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react';
-import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
+import { useEffect, useState } from 'react';
 // material
-import { useTheme, experimentalStyled as styled } from '@material-ui/core/styles';
 import {
   Box,
   Button,
@@ -18,31 +17,32 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 // redux
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllCategories, deleteCategory } from '../../../redux/slices/categorySlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocales } from '../../../hooks';
+import { deleteCategory, getAllCategories } from '../../../redux/slices/categorySlice';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
-import { ThumbImgStyle } from '../../../components/@styled';
 import { MTablePagination } from '../../../components/@material-extend';
 import { MTableHead, MTableToolbar } from '../../../components/@material-extend/table';
+import { ThumbImgStyle } from '../../../components/@styled';
 
-import Page from '../../../components/Page';
-import Label from '../../../components/Label';
-import Scrollbar from '../../../components/Scrollbar';
-import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import LoadingScreen from '../../../components/LoadingScreen';
+import { ImageBrokenIcon } from '../../../assets';
 import EmptyCard from '../../../components/EmptyCard';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import Label from '../../../components/Label';
+import LoadingScreen from '../../../components/LoadingScreen';
+import Page from '../../../components/Page';
+import Scrollbar from '../../../components/Scrollbar';
 import { CategoryMoreMenu } from '../../../components/dashboard/category-list';
 import CategoryForm from './CategoryForm';
-import { ImageBrokenIcon } from '../../../assets';
 
 // utils
+import { getComparator, stableSort } from '../../../helper/listHelper';
 import { fDateTime } from '../../../utils/formatTime';
-import { stableSort, getComparator } from '../../../helper/listHelper';
 
 // ----------------------------------------------------------------------
 
@@ -184,7 +184,8 @@ export default function PageCategoryList() {
     {
       id: 'action',
       align: 'right',
-      disablePadding: false
+      disablePadding: false,
+      label: ''
     }
   ];
 

@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 const API_BASE_URL = '/api/v2';
@@ -7,8 +6,6 @@ const API_BASE_URL = '/api/v2';
 const API = axios.create({
   baseURL: API_BASE_URL
 });
-
-console.log('DEBUG: API_BASE_URL is:', API_BASE_URL);
 
 // Add request interceptor
 const requestInterceptor = (req) => {

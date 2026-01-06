@@ -13,17 +13,12 @@
 // export default store;
 
 import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
 import rootReducer from './rootReducer';
 
 const middleware = (getDefaultMiddleware) => {
   let middlewares = getDefaultMiddleware({
     serializableCheck: false
   });
-
-  if (import.meta.env.DEV) {
-    middlewares = middlewares.concat(logger);
-  }
   return middlewares;
 };
 

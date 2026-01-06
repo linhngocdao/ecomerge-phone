@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { Icon } from '@iconify/react';
 import roundFullscreen from '@iconify/icons-ic/round-fullscreen';
 import roundFullscreenExit from '@iconify/icons-ic/round-fullscreen-exit';
+import { Icon } from '@iconify/react';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 // material
-import { alpha } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles';
 
 // ----------------------------------------------------------------------
 
@@ -14,12 +14,12 @@ SettingFullscreen.propTypes = {
   titleOff: PropTypes.string
 };
 
-SettingFullscreen.defaultProps = {
-  titleOn: 'Fullscreen',
-  titleOff: 'Exit Fullscreen'
-};
+// SettingFullscreen.defaultProps = {
+//   titleOn: 'Fullscreen',
+//   titleOff: 'Exit Fullscreen'
+// };
 
-export default function SettingFullscreen({ titleOn, titleOff }) {
+export default function SettingFullscreen({ titleOn = 'Fullscreen', titleOff = 'Exit Fullscreen' }) {
   const [fullscreen, setFullscreen] = useState(false);
 
   const toggleFullScreen = () => {

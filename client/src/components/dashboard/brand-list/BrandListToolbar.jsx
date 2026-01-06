@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import { Icon } from '@iconify/react';
+import PropTypes from 'prop-types';
 // material
-import { useTheme, experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, Toolbar, Tooltip, Typography, IconButton, OutlinedInput, InputAdornment } from '@material-ui/core';
-import eyeFill from '@iconify/icons-eva/eye-fill';
 import editFill from '@iconify/icons-eva/edit-fill';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import { Box, IconButton, InputAdornment, OutlinedInput, Toolbar, Tooltip, Typography } from '@material-ui/core';
+import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
@@ -36,8 +36,8 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 BrandListToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  filterName: PropTypes,
-  onFilterName: PropTypes
+  filterName: PropTypes.string,
+  onFilterName: PropTypes.func
 };
 
 export default function BrandListToolbar({ numSelected, filterName, onFilterName }) {

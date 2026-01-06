@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // material
+import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import { visuallyHidden } from '@material-ui/utils';
-import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ MTableHead.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
-      align: PropTypes.oneOf('left', 'center', 'right', 'justify', 'inherit'),
+      align: PropTypes.oneOf(['left', 'center', 'right', 'justify', 'inherit']),
       disablePadding: PropTypes.bool
     })
   ),

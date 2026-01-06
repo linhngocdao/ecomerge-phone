@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 // icons
-import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
+import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
+import { Avatar, Box, Button, Divider, MenuItem, Typography } from '@material-ui/core';
 import { alpha } from '@material-ui/core/styles';
-import { Avatar, Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 // hooks
-import useLocales from '../../hooks/useLocales';
 import useAuth from '../../hooks/useAuth';
+import useLocales from '../../hooks/useLocales';
 // components
-import { LoginIcon, LogoutIcon, UserIcon } from '../../assets';
-import { MButton, MIconButton, MHidden } from '../../components/@material-extend';
+import { LoginIcon, UserIcon } from '../../assets';
+import { MButton, MHidden, MIconButton } from '../../components/@material-extend';
 import MenuPopover from '../../components/MenuPopover';
 import { PATH_DASHBOARD } from '../../routes/paths';
 
@@ -40,12 +40,12 @@ AccountPopover.propTypes = {
   isShowTitle: PropTypes.bool
 };
 
-AccountPopover.defaultProps = {
-  menuOptions: DEFAULT_MENU_OPTIONS,
-  isShowTitle: false
-};
+// AccountPopover.defaultProps = {
+//   menuOptions: DEFAULT_MENU_OPTIONS,
+//   isShowTitle: false
+// };
 
-export default function AccountPopover({ menuOptions, isShowTitle }) {
+export default function AccountPopover({ menuOptions = DEFAULT_MENU_OPTIONS, isShowTitle = false }) {
   const anchorRef = useRef(null);
   const { t, currentLang } = useLocales();
   const { user, logout } = useAuth();

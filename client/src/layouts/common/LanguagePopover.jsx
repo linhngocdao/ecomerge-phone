@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 // icons
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 // material
+import { Box, ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import { alpha } from '@material-ui/core/styles';
-import { Box, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 // hooks
-import { useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
+import { useRef, useState } from 'react';
 import useLocales from '../../hooks/useLocales';
 // components
+import { MButton, MHidden, MIconButton } from '../../components/@material-extend';
 import MenuPopover from '../../components/MenuPopover';
-import { MButton, MIconButton, MHidden } from '../../components/@material-extend';
 
 // ----------------------------------------------------------------------
 
@@ -19,11 +19,7 @@ LanguagePopover.propTypes = {
   isShowTitle: PropTypes.bool
 };
 
-LanguagePopover.defaultProps = {
-  isShowTitle: false
-};
-
-export default function LanguagePopover({ isShowTitle }) {
+export default function LanguagePopover({ isShowTitle = false }) {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const { allLang, currentLang, t, onChangeLang } = useLocales();

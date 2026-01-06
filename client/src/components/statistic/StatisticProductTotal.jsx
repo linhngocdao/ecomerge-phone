@@ -1,20 +1,20 @@
-import { merge } from 'lodash';
-import { Icon } from '@iconify/react';
-import ReactApexChart from 'react-apexcharts';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
+import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
+import { Icon } from '@iconify/react';
+import { merge } from 'lodash';
+import ReactApexChart from 'react-apexcharts';
 // material
+import { Box, Card, Stack, Typography } from '@material-ui/core';
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, Card, Typography, Stack } from '@material-ui/core';
 // utils
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fNumber, fPercent } from '../../utils/formatNumber';
 //
-import BaseOptionChart from '../charts/BaseOptionChart';
-import { getAllProducts } from '../../redux/slices/productSlice';
-import useLocales from '../../hooks/useLocales';
 import * as api from '../../api';
+import useLocales from '../../hooks/useLocales';
+import { getAllProducts } from '../../redux/slices/productSlice';
+import BaseOptionChart from '../charts/BaseOptionChart';
 
 // ----------------------------------------------------------------------
 
@@ -45,36 +45,46 @@ export default function StatisticProductTotal() {
   }, [dispatch]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    const { data } = await api.getFullAllProduct();
-    setProducts(data.data);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await api.getFullAllProduct();
+        setProducts(data.data);
+      } catch (error) {
+        console.error('Failed to fetch product statistics:', error);
+      }
+    };
+    fetchData();
   }, [productsList]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
+  useEffect(() => {
     if (products) {
-      const currentDate = new Date();
-      const currentDateInWeek = new Date();
-      const currentDateLastWeek = new Date();
-      currentDateInWeek.setDate(currentDateInWeek.getDate() - 7);
-      currentDateLastWeek.setDate(currentDateLastWeek.getDate() - 14);
+      const calculateStats = async () => {
+        const currentDate = new Date();
+        const currentDateInWeek = new Date();
+        const currentDateLastWeek = new Date();
+        currentDateInWeek.setDate(currentDateInWeek.getDate() - 7);
+        currentDateLastWeek.setDate(currentDateLastWeek.getDate() - 14);
 
-      const inWeek = products.filter(
-        (item) =>
-          new Date(item?.createdAt).getTime() <= currentDate.getTime() &&
-          new Date(item?.createdAt).getTime() >= currentDateInWeek.getTime()
-      );
+        const inWeek = products.filter(
+          (item) =>
+            new Date(item?.createdAt).getTime() <= currentDate.getTime() &&
+            new Date(item?.createdAt).getTime() >= currentDateInWeek.getTime()
+        );
 
-      const lastWeek = products.filter(
-        (item) =>
-          new Date(item?.createdAt).getTime() <= currentDateInWeek.getTime() &&
-          new Date(item?.createdAt).getTime() >= currentDateLastWeek.getTime()
-      );
-      if (lastWeek.length !== 0) {
-        setPercent((inWeek.length / lastWeek.length) * 100);
-      } else {
-        setPercent(100);
-      }
+        const lastWeek = products.filter(
+          (item) =>
+            new Date(item?.createdAt).getTime() <= currentDateInWeek.getTime() &&
+            new Date(item?.createdAt).getTime() >= currentDateLastWeek.getTime()
+        );
+        if (lastWeek.length !== 0) {
+          setPercent((inWeek.length / lastWeek.length) * 100);
+        } else {
+          setPercent(100);
+        }
+      };
+      calculateStats();
     }
   }, [products]);
 

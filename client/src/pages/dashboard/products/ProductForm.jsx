@@ -531,6 +531,7 @@ export default function ProductForm() {
                   render={({ field }) => (
                     <CountryPicker
                       label={t('products.origin')}
+                      value={field.value}
                       onChange={(_event, label) => field.onChange(label?.label || '')}
                       required
                       fullWidth
@@ -563,11 +564,9 @@ export default function ProductForm() {
 
                 <Link to={PATH_DASHBOARD.app.brands} color="inherit" component={RouterLink}>
                   <Typography variant="inherit" sx={{ mt: -2, ml: 1, fontSize: 'small' }}>
-                    <a>
-                      <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
-                        &nbsp;{t('products.brand-add')}
-                      </Typography>
-                    </a>
+                    <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
+                      &nbsp;{t('products.brand-add')}
+                    </Typography>
                   </Typography>
                 </Link>
 
@@ -596,11 +595,9 @@ export default function ProductForm() {
 
                 <Link to={PATH_DASHBOARD.app.categories} color="inherit" component={RouterLink}>
                   <Typography variant="inherit" sx={{ mt: -2, ml: 1, fontSize: 'small' }}>
-                    <a>
-                      <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
-                        &nbsp;{t('products.category-add')}
-                      </Typography>
-                    </a>
+                    <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
+                      &nbsp;{t('products.category-add')}
+                    </Typography>
                   </Typography>
                 </Link>
 

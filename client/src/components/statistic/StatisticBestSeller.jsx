@@ -1,35 +1,35 @@
 import { sentenceCase } from 'change-case';
 // material
-import { useTheme } from '@material-ui/core/styles';
 import {
+  Avatar,
   Box,
   Card,
+  CardHeader,
   Table,
-  Avatar,
-  TableRow,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
-  CardHeader,
-  Typography,
-  TableContainer
+  TableRow,
+  Typography
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 // utils
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 //
-import Label from '../Label';
-import Scrollbar from '../Scrollbar';
+import * as api from '../../api';
 import useLocales from '../../hooks/useLocales';
 import { getFullAllProducts } from '../../redux/slices/productSlice';
-import * as api from '../../api';
+import Label from '../Label';
+import Scrollbar from '../Scrollbar';
 
 // ----------------------------------------------------------------------
 
 export default function StatisticBestSeller() {
   const { t } = useLocales();
   const dispatch = useDispatch();
-  const { listFull: productsList } = useSelector((state) => state.product);
+  useSelector((state) => state.product);
   const theme = useTheme();
   const [listProductBestSeller, setListProductBestSeller] = useState([]);
 
@@ -37,39 +37,45 @@ export default function StatisticBestSeller() {
     dispatch(getFullAllProducts());
   }, [dispatch]);
 
-  useEffect(async () => {
-    const bestSellers = [];
-    await api.getFullAllProduct().then((data) => {
-      const productsList = data.data.data;
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < productsList.length; i++) {
+  useEffect(() => {
+    const fetchData = async () => {
+      const bestSellers = [];
+      try {
+        const data = await api.getFullAllProduct();
+        const productsList = data.data.data;
         // eslint-disable-next-line no-plusplus
-        for (let j = 0; j < productsList[i].variants.length; j++) {
-          const productItem = {
-            product: productsList[i].name,
-            variant: productsList[i].variants[j].variantName,
-            thumbnail: productsList[i].variants[j].thumbnail,
-            total: productsList[i].variants[j].sold
-          };
-          bestSellers.push(productItem);
+        for (let i = 0; i < productsList.length; i++) {
+          // eslint-disable-next-line no-plusplus
+          for (let j = 0; j < productsList[i].variants.length; j++) {
+            const productItem = {
+              product: productsList[i].name,
+              variant: productsList[i].variants[j].variantName,
+              thumbnail: productsList[i].variants[j].thumbnail,
+              total: productsList[i].variants[j].sold
+            };
+            bestSellers.push(productItem);
+          }
         }
+        bestSellers.sort((a, b) => b.total - a.total);
+        const bestSeller5 = bestSellers.slice(0, 5);
+        const bestSellersRank = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < bestSeller5.length; i++) {
+          const productItem = {
+            product: bestSeller5[i].product,
+            variant: bestSeller5[i].variant,
+            thumbnail: bestSeller5[i]?.thumbnail,
+            total: bestSeller5[i].total,
+            rank: `top_${i + 1}`
+          };
+          bestSellersRank.push(productItem);
+        }
+        setListProductBestSeller(bestSellersRank);
+      } catch (error) {
+        console.error('Failed to fetch best seller data', error);
       }
-    });
-    bestSellers.sort((a, b) => b.total - a.total);
-    const bestSeller5 = bestSellers.slice(0, 5);
-    const bestSellersRank = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < bestSeller5.length; i++) {
-      const productItem = {
-        product: bestSeller5[i].product,
-        variant: bestSeller5[i].variant,
-        thumbnail: bestSeller5[i]?.thumbnail,
-        total: bestSeller5[i].total,
-        rank: `top_${i + 1}`
-      };
-      bestSellersRank.push(productItem);
-    }
-    setListProductBestSeller(bestSellersRank);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -87,7 +93,7 @@ export default function StatisticBestSeller() {
             </TableHead>
             <TableBody>
               {listProductBestSeller.map((row) => (
-                <TableRow key={row.variant}>
+                <TableRow key={row.rank}>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Avatar alt={row.variant} src={row?.thumbnail} />

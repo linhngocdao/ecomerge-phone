@@ -197,6 +197,10 @@ export default function ProductTableToolbar({
                 options={categoryOpts}
                 getOptionLabel={(item) => item?.name || '<trống>'}
                 value={selectedCategory}
+                isOptionEqualToValue={(option, value) => {
+                  if (!value || !value._id) return true;
+                  return option._id === value._id;
+                }}
                 size="small"
                 renderInput={(params) => <TextField {...params} label="Danh mục" />}
                 onChange={handleChangeCategoryFilter}
@@ -209,6 +213,10 @@ export default function ProductTableToolbar({
                 options={brandOpts}
                 getOptionLabel={(item) => item?.name || '<trống>'}
                 value={selectedBrand}
+                isOptionEqualToValue={(option, value) => {
+                  if (!value || !value._id) return true;
+                  return option._id === value._id;
+                }}
                 size="small"
                 renderInput={(params) => <TextField {...params} label="Thương hiệu" />}
                 onChange={handleChangeBrandFilter}

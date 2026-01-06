@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import TablePagination from '@material-ui/core/TablePagination';
+import PropTypes from 'prop-types';
 import useLocales from '../../hooks/useLocales';
 
 MTablePagination.propTypes = {
@@ -11,17 +11,13 @@ MTablePagination.propTypes = {
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number)
 };
 
-MTablePagination.defaultProps = {
-  rowsPerPageOptions: [10, 25, 50, 100]
-};
-
 export default function MTablePagination({
   count,
   rowsPerPage,
   page,
   onChangePage,
   onRowsPerPageChange,
-  rowsPerPageOptions,
+  rowsPerPageOptions = [10, 25, 50, 100],
   ...other
 }) {
   const { t } = useLocales();

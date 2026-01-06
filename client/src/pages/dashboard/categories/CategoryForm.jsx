@@ -1,44 +1,44 @@
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { useState, useCallback, useEffect } from 'react';
+import { Icon } from '@iconify/react';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
 // material
 import {
   Autocomplete,
   Button,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   Grid,
-  TextField,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  RadioGroup,
   Radio,
+  RadioGroup,
   Stack,
+  TextField,
   Typography
 } from '@material-ui/core';
 // from validation
-import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
+import * as Yup from 'yup';
 // redux
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createCategory, updateCategory } from '../../../redux/slices/categorySlice';
 // hooks
 import useLocales from '../../../hooks/useLocales';
 // components
-import { MRadio, MIconButton, MLabelTypo } from '../../../components/@material-extend';
-import { UploadSingleFile } from '../../../components/upload';
-import { varFadeInUp, MotionInView } from '../../../components/animate';
+import { MIconButton, MLabelTypo, MRadio } from '../../../components/@material-extend';
+import { MotionInView, varFadeInUp } from '../../../components/animate';
 import LoadingScreen from '../../../components/LoadingScreen';
+import { UploadSingleFile } from '../../../components/upload';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
 import { uploadSingleFile } from '../../../helper/uploadHelper';
 
 // ----------------------------------------------------------------------
 
 CategoryForm.propTypes = {
-  currentId: PropTypes.any.isRequired,
+  currentId: PropTypes.string,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired
 };
@@ -69,7 +69,7 @@ export default function CategoryForm({ currentId, open, setOpen }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  const handleChangeOrder = (e, newValue) => {
+  const handleChangeOrder = (_e, newValue) => {
     setCategoryData({ ...categoryData, order: newValue });
   };
 
@@ -139,7 +139,8 @@ export default function CategoryForm({ currentId, open, setOpen }) {
     );
   };
 
-  const handleClose = () => {
+  const handleClose = (_event, reason) => {
+    if (reason === 'backdropClick') return;
     setOpen(false);
   };
 
@@ -181,7 +182,7 @@ export default function CategoryForm({ currentId, open, setOpen }) {
   const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
-    <Dialog disableEscapeKeyDown onBackdropClick="false" open={open} onClose={handleClose}>
+    <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
       <DialogTitle>
         <Typography variant="h4" marginBottom={2} sx={{ textTransform: 'uppercase' }}>
           {currentId ? t('dashboard.categories.edit') : t('dashboard.categories.add-title')}

@@ -6,16 +6,16 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 // material
 import {
-    Autocomplete,
-    Button,
-    Card,
-    Chip,
-    FormHelperText,
-    Grid,
-    Link,
-    Stack,
-    TextField,
-    Typography
+  Autocomplete,
+  Button,
+  Card,
+  Chip,
+  FormHelperText,
+  Grid,
+  Link,
+  Stack,
+  TextField,
+  Typography
 } from '@material-ui/core';
 import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -195,7 +195,6 @@ export default function PageProductEdit() {
                     fullWidth
                     label={t('products.warranty-period')}
                     {...getFieldProps('warrantyPeriod')}
-                    defaultValue={12}
                   />
                   {/* <Autocomplete */}
                   {/*  required */}
@@ -223,6 +222,11 @@ export default function PageProductEdit() {
                         setFieldValue('brand', newValue?._id);
                         setValidationBrand(false);
                       }}
+                      isOptionEqualToValue={(option, value) => {
+                        if (!value || !value._id) return true;
+                        // Handle both full object comparison and ID comparison if value is just ID
+                        return option._id === value._id || option._id === value;
+                      }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -231,7 +235,6 @@ export default function PageProductEdit() {
                           error={Boolean(validationBrand)}
                         />
                       )}
-                      error={Boolean(true)}
                     />
                   )}
                   <Link to={PATH_DASHBOARD.app.brands} color="inherit" component={RouterLink}>
@@ -243,7 +246,7 @@ export default function PageProductEdit() {
                         fontSize: 'small'
                       }}
                     >
-                      <Typography component="a" variant="subtitle4" sx={{ color: 'primary.main' }}>
+                      <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
                         &nbsp;{t('products.brand-add')}
                       </Typography>
                     </Typography>
@@ -259,6 +262,10 @@ export default function PageProductEdit() {
                       onChange={(e, newValue) => {
                         setFieldValue('category', newValue?._id);
                         setValidationCategory(false);
+                      }}
+                      isOptionEqualToValue={(option, value) => {
+                        if (!value || !value._id) return true;
+                        return option._id === value._id || option._id === value;
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -279,7 +286,7 @@ export default function PageProductEdit() {
                         fontSize: 'small'
                       }}
                     >
-                      <Typography component="a" variant="subtitle4" sx={{ color: 'primary.main' }}>
+                      <Typography component="span" variant="subtitle4" sx={{ color: 'primary.main' }}>
                         &nbsp;{t('products.category-add')}
                       </Typography>
                     </Typography>
@@ -293,9 +300,10 @@ export default function PageProductEdit() {
                     }}
                     options={TAGS_OPTION.map((option) => option)}
                     renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip key={option} size="small" label={option} {...getTagProps({ index })} />
-                      ))
+                      value.map((option, index) => {
+                        const { key, ...tagProps } = getTagProps({ index });
+                        return <Chip key={key} size="small" label={option} {...tagProps} />;
+                      })
                     }
                     renderInput={(params) => <TextField label="Tags" {...params} />}
                   />

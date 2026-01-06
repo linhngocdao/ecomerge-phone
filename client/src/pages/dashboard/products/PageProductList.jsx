@@ -102,7 +102,8 @@ export default function PageProductList() {
     {
       id: 'action',
       numeric: false,
-      disablePadding: false
+      disablePadding: false,
+      label: ''
     }
   ];
 
@@ -352,7 +353,7 @@ export default function PageProductList() {
               labelRowsPerPage={t('common.rows-per-page')}
               rowsPerPageOptions={[5, 10, 25, 50, 100]}
               component="div"
-              count={pagination.total}
+              count={pagination?.total || 0}
               rowsPerPage={rowsPerPage}
               page={page - 1}
               onPageChange={handleChangePage}

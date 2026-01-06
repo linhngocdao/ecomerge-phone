@@ -11,25 +11,22 @@ CountryPicker.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-CountryPicker.defaultProps = {
-  defaultCountryCode: 'VN',
-  value: 'Viet Nam'
-};
-
 export const defaultCountryCode = 'VN';
 export const defaultCountryName = 'Viet Nam';
 
-export default function CountryPicker({ label, defaultCountryCode, value, onChange, ...other }) {
+export default function CountryPicker({ label, defaultCountryCode = 'VN', value = 'Viet Nam', onChange, ...other }) {
   const defaultCountry = COUNTRIES.find((country) => country.code === defaultCountryCode);
   return (
     <Autocomplete
       defaultValue={defaultCountry}
-      options={COUNTRIES.map((country) => ({
-        label: country.label
-      }))}
-      value={COUNTRIES.find((country) => country.label === value)}
-      onChange={onChange}
+      options={COUNTRIES}
       getOptionLabel={(option) => option.label}
+      value={COUNTRIES.find((country) => country.label === value) || null}
+      isOptionEqualToValue={(option, value) => {
+        if (!value) return true;
+        return option.label === value.label;
+      }}
+      onChange={onChange}
       renderInput={(params) => <TextField {...params} label={label} margin="none" />}
       {...other}
     />
