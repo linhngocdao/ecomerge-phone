@@ -1,12 +1,10 @@
 // material
+import { Box, Card, Container, Link, Typography } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Alert, Box, Card, Link, Container, Stack, Typography } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
 // form validation
 import * as Yup from 'yup';
-import { Form, FormikProvider, useFormik } from 'formik';
 //
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // hooks
 import { useLocales } from '../../hooks';
@@ -15,13 +13,11 @@ import { PATH_AUTH } from '../../routes/paths';
 // layouts
 import AuthLayout from '../../layouts/AuthLayout';
 // components
-import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-import AuthWithSocial from '../../components/authentication/AuthWithSocial';
 import RegisterForm from '../../components/authentication/register/RegisterForm';
-import { CustomPhoneInput } from '../../components/@input';
+import Page from '../../components/Page';
 // firebase
-import firebase, { auth as firebaseAuth } from '../../firebase';
+import firebase from '../../firebase';
 
 // ----------------------------------------------------------------------
 

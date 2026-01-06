@@ -21,7 +21,7 @@ const handlers = {
     orderInfo: { ...state.orderInfo, ...action.payload }
   }),
 
-  CREATING_ORDER: (state, action) => ({
+  CREATING_ORDER: (state) => ({
     ...state,
     isCreatingOrder: true,
     orderError: null

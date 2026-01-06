@@ -35,20 +35,19 @@ import { BrowserRouter } from 'react-router-dom';
 // redux
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
 // contexts
-import { AuthProvider } from './contexts/AuthContext.jsx';
-import { OrderProvider } from './contexts/OrderContext.jsx';
-import { SettingsProvider } from './contexts/SettingsContext.jsx';
+import { AuthProvider } from './contexts/AuthContext';
+import { OrderProvider } from './contexts/OrderContext';
+import { SettingsProvider } from './contexts/SettingsContext';
 //
-import App from './App.jsx';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
 // ----------------------------------------------------------------------
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 

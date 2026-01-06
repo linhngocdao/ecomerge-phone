@@ -1,13 +1,13 @@
-import { Icon } from '@iconify/react';
-import googleFill from '@iconify/icons-eva/google-fill';
-import twitterFill from '@iconify/icons-eva/twitter-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
+import googleFill from '@iconify/icons-eva/google-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
-import { Link as ScrollLink } from 'react-scroll';
+import twitterFill from '@iconify/icons-eva/twitter-fill';
+import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 // material
+import { Container, Divider, Grid, IconButton, Link, Stack, Typography } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Grid, Link, Divider, Container, Typography, IconButton, Stack } from '@material-ui/core';
 //
 import Logo from '../../components/Logo';
 import useLocales from '../../hooks/useLocales';
@@ -29,8 +29,6 @@ const RootStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainFooter() {
-  const t = useLocales();
-
   const LINKS = [
     {
       headline: 'VỀ CHÚNG TÔI',

@@ -1,40 +1,35 @@
-import * as actionTypes from '../../constants/actionTypes';
-import * as api from '../../api';
-
-const isDev = import.meta.env.DEV;
-
-export const getAllProducts = (_search = '', brand = '', category = '', page = 1, limit = 12) => {
+export const getAllProducts = (_search = '', _brand = '', _category = '', _page = 1, _limit = 12) => {
   throw new Error('Not implemented');
 };
 
-export const getFullAllProducts = () => async (dispatch) => {
+export const getFullAllProducts = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const getProductById = (id) => async (dispatch) => {
+export const getProductById = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const createProduct = (newProduct) => async (dispatch) => {
+export const createProduct = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const updateProduct = (id, updateProduct) => async (dispatch) => {
+export const updateProduct = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const deleteProduct = (id) => async (dispatch) => {
+export const deleteProduct = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const createProductVariant = (id, productVariant) => async (dispatch) => {
+export const createProductVariant = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const updateProductVariant = (id, sku, productVariant) => async (dispatch) => {
+export const updateProductVariant = () => async () => {
   throw new Error('Not implemented');
 };
 
-export const deleteProductVariant = (productId, sku) => async (dispatch) => {
+export const deleteProductVariant = () => async () => {
   throw new Error('Not implemented');
 };

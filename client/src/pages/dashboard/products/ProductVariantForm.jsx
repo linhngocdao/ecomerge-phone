@@ -1,31 +1,31 @@
 import PropTypes from 'prop-types';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // material
+import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 import {
   Button,
-  Dialog,
-  TextField,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Stack,
   Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormHelperText,
-  InputAdornment
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { Icon } from '@iconify/react';
-import closeFill from '@iconify/icons-eva/close-fill';
-import { experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
-import { UploadMultiFile, UploadSingleFile } from '../../../components/upload';
-import useLocales from '../../../hooks/useLocales';
 import { MIconButton } from '../../../components/@material-extend';
+import { UploadMultiFile, UploadSingleFile } from '../../../components/upload';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
-import { uploadSingleFile, uploadMultipleFiles } from '../../../helper/uploadHelper';
+import { uploadMultipleFiles, uploadSingleFile } from '../../../helper/uploadHelper';
+import useLocales from '../../../hooks/useLocales';
 import { createProductVariant, getProductById, updateProductVariant } from '../../../redux/slices/productSlice';
 
 const LabelStyle = styled(Typography)(({ theme }) => ({

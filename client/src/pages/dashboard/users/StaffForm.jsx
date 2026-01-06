@@ -1,36 +1,36 @@
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Icon } from '@iconify/react';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // material
 import {
   Autocomplete,
   Button,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   Grid,
-  TextField,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  RadioGroup,
   Radio,
+  RadioGroup,
   Stack,
+  TextField,
   Typography
 } from '@material-ui/core';
-import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { MRadio, MIconButton, MLabelTypo } from '../../../components/@material-extend';
+import * as Yup from 'yup';
+import { MIconButton, MLabelTypo, MRadio } from '../../../components/@material-extend';
 //
+import { MotionInView, varFadeInUp } from '../../../components/animate';
+import LoadingScreen from '../../../components/LoadingScreen';
 import { UploadSingleFile } from '../../../components/upload';
-import { varFadeInUp, MotionInView } from '../../../components/animate';
+import { allowImageMineTypes } from '../../../constants/imageMineTypes';
+import { uploadSingleFile } from '../../../helper/uploadHelper';
 import useLocales from '../../../hooks/useLocales';
 import { createCategory, updateCategory } from '../../../redux/slices/categorySlice';
-import { uploadSingleFile } from '../../../helper/uploadHelper';
-import LoadingScreen from '../../../components/LoadingScreen';
-import { allowImageMineTypes } from '../../../constants/imageMineTypes';
 
 // ----------------------------------------------------------------------
 
@@ -200,7 +200,7 @@ export default function StaffForm({ currentId, open, setOpen }) {
                     options={categoriesList.filter((x) => !x.isHide && x._id !== currentId)}
                     getOptionLabel={(option) => option.name}
                     value={categoriesList.find((c) => c.slug === categoryData.parent)}
-                    onChange={(e, newValue) => setCategoryData({ ...categoryData, parent: newValue._id })}
+                    onChange={(_e, newValue) => setCategoryData({ ...categoryData, parent: newValue._id })}
                     renderInput={(params) => (
                       <TextField {...params} label={t('dashboard.categories.parent')} margin="none" />
                     )}

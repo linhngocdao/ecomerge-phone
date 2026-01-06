@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // material
+import { Box, Container, Stack, Tab, Tabs, Typography, useMediaQuery } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { useMediaQuery, Box, Container, Stack, Tab, Tabs, Typography } from '@material-ui/core';
 // icons
-import { Icon } from '@iconify/react';
 import baselineLocationOn from '@iconify/icons-ic/baseline-location-on';
-import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
-import roundReceipt from '@iconify/icons-ic/round-receipt';
-import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import baselineSettings from '@iconify/icons-ic/baseline-settings';
+import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
+import { Icon } from '@iconify/react';
 // hooks
-import useQuery from '../../hooks/useQuery';
 import useLocales from '../../hooks/useLocales';
+import useQuery from '../../hooks/useQuery';
 // components
 import Page from '../../components/Page';
 import {
-  AccountGeneral,
-  AccountBilling,
   AccountAddressBook,
   AccountChangePassword,
+  AccountGeneral,
   AccountNotifications
 } from '../../components/account';
 
@@ -37,8 +35,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function AccountPage() {
   const { t } = useLocales();
-
   const navigate = useNavigate();
+
   const query = useQuery();
   const tabSlug = query.get('tab');
 
@@ -88,8 +86,8 @@ export default function AccountPage() {
   ];
 
   const handleChangeTab = (event, newValue) => {
-    setCurrentTab(newValue);
     navigate(`?tab=${newValue}`);
+    setCurrentTab(newValue);
   };
 
   return (

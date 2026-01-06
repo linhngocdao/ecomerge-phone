@@ -1,37 +1,37 @@
 import PropTypes from 'prop-types';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // material
 import {
   Button,
   Dialog,
-  TextField,
-  DialogTitle,
-  DialogContent,
   DialogActions,
-  Typography,
-  Stack,
-  Grid,
-  RadioGroup,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
-  Radio
+  Grid,
+  Radio,
+  RadioGroup,
+  Stack,
+  TextField,
+  Typography
 } from '@material-ui/core';
 // icons
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 // form validation
-import * as Yup from 'yup';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
+import * as Yup from 'yup';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrand, updateBrand } from '../../../redux/slices/brandSlice';
 // hooks
 import useLocales from '../../../hooks/useLocales';
 // components
+import { MIconButton, MRadio } from '../../../components/@material-extend';
+import { MotionInView, varFadeInUp } from '../../../components/animate';
 import CountryPicker, { defaultCountryName } from '../../../components/CountryPicker';
 import { UploadSingleFile } from '../../../components/upload';
-import { MotionInView, varFadeInUp } from '../../../components/animate';
-import { MIconButton, MRadio } from '../../../components/@material-extend';
 // others
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
 import { uploadSingleFile } from '../../../helper/uploadHelper';
@@ -236,7 +236,7 @@ export default function BrandForm({ currentId, open, setOpen }) {
               <MotionInView variants={varFadeInUp}>
                 <CountryPicker
                   label={t('dashboard.brands.country')}
-                  onChange={(e, newValue) => setBrandData({ ...brandData, country: newValue.label })}
+                  onChange={(_e, newValue) => setBrandData({ ...brandData, country: newValue.label })}
                   value={brandData.country}
                   required
                   fullWidth

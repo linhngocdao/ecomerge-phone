@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
 // icons
-import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
+import { Icon } from '@iconify/react';
 // material
 import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  InputAdornment,
   Autocomplete,
-  TextField,
+  Box,
+  ClickAwayListener,
+  Grid,
+  InputAdornment,
   Link,
-  ClickAwayListener
+  Paper,
+  TextField,
+  Typography
 } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 // hook
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocales, useLocalStorage } from '../../hooks';
@@ -24,25 +24,14 @@ import { useLocales, useLocalStorage } from '../../hooks';
 import { MCircularProgress } from '../../components/@material-extend';
 import { ThumbImgStyle } from '../../components/@styled';
 // utils
-import { fCurrency } from '../../utils/formatNumber';
 import Label from '../../components/Label';
+import { fCurrency } from '../../utils/formatNumber';
 
 import { quickSearchProduct } from '../../redux/slices/searchProductSlice';
 
 import * as typeUtils from '../../utils/typeUtils';
 
 // ----------------------------------------------------------------------
-
-const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
-  fontWeight: 'fontWeightBold',
-  maxWidth: 400,
-  marginLeft: 3,
-  zIndex: 999,
-  backgroundColor: `${theme.palette.primary.lighter}40`,
-  '& .MuiAutocomplete-listbox': {
-    maxHeight: '80vh'
-  }
-}));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   maxWidth: 400,
@@ -51,7 +40,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   backgroundColor: `${theme.palette.primary.lighter}40`
 }));
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box)(() => ({
   position: 'fixed',
   backgroundColor: 'white',
   display: 'flex',
@@ -130,7 +119,7 @@ ResultItem.propTypes = {
 
 // ----------------------------------------------------------------------
 
-export default function SearchBar({ iconSx }) {
+export default function SearchBar() {
   const { t } = useLocales();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -164,10 +153,6 @@ export default function SearchBar({ iconSx }) {
     setShowResult(true);
   };
 
-  const handleOpen = () => {
-    setOpen((prev) => !prev);
-  };
-
   const handleClose = () => {
     setOpen(false);
     setShowResult(false);
@@ -199,35 +184,6 @@ export default function SearchBar({ iconSx }) {
     navigate(`/p/${product.slug}`);
     setOpen(false);
     setShowResult(false);
-  };
-
-  const renderResultItem = (props, product) => {
-    console.log('useEffect-renderResultItem', product);
-
-    if (isLoading) {
-      return <MCircularProgress size={15} sx={{ my: 3 }} />;
-    }
-    return (
-      <ResultItem {...props} key={product._id} product={product} onClick={() => handleOnClickResultItem(product)} />
-    );
-  };
-
-  const renderSearchHistory = () => {
-    if (!searchHistory?.length > 0 || results?.length > 0) {
-      return null;
-    }
-    return (
-      <Box sx={{ alignItems: 'flex-start', width: '100%' }}>
-        <Label sx={{ mb: 2 }}>Lịch sử tìm kiếm</Label>
-        <Grid container spacing={1.5}>
-          {searchHistory.map(({ name, slug }) => (
-            <Grid key={slug} item sm={12} md={6} sx={{ cursor: 'pointer' }}>
-              <Link href={`/p/${slug}`}>{name}</Link>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    );
   };
 
   const renderSearchResult = () => {

@@ -126,6 +126,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.3",
+    "@babel/preset-react": "^7.28.5",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",

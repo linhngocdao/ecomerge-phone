@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import SimpleBarReact from 'simplebar-react';
 // routes
-import Router from './routes/index.jsx';
+import Router from './routes/index';
 // theme
-import ThemeConfig from './theme/index.jsx';
+import ThemeConfig from './theme/index';
 // hooks
 import { useAuth, useInterval } from './hooks';
 // components
@@ -13,7 +13,7 @@ import LoadingScreen from './components/LoadingScreen';
 import NotistackProvider from './components/NotistackProvider';
 import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';
-import Settings from './components/settings/index.jsx';
+import Settings from './components/settings/index';
 import ThemePrimaryColor from './components/ThemePrimaryColor';
 
 import { syncCart } from './redux/slices/cartSlice';

@@ -1,8 +1,6 @@
 import { orderManager as apiOrderMgr } from '../../api';
 import * as actionTypes from '../../constants/actionTypes';
 
-const isDev = import.meta.env.DEV;
-
 const handleError = (dispatch, e, logTag) => {
   console.error(`[actions]${logTag} error`, e?.response?.data || e);
   dispatch({ type: actionTypes.ORDER.ERROR, payload: e?.response?.data || e });
@@ -26,7 +24,6 @@ export const getAllOrders = (search, status, paymentStatus, page, limit) => asyn
 export const createOrder = (newOrder) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.ORDER.START_LOADING });
-
 
     const { data } = await apiOrderMgr.create(newOrder);
     dispatch({ type: actionTypes.ORDER.CREATE, payload: data });

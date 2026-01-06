@@ -1,32 +1,32 @@
 // icon
-import { Icon } from '@iconify/react';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import clockFill from '@iconify/icons-eva/clock-fill';
 import roundVerified from '@iconify/icons-ic/round-verified';
 import roundVerifiedUser from '@iconify/icons-ic/round-verified-user';
+import { Icon } from '@iconify/react';
 //
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import SimpleBarReact from 'simplebar-react';
 // material
+import { Box, Button, Card, Container, Divider, Grid, Rating, Stack, Tab, Typography } from '@material-ui/core';
 import { alpha, experimentalStyled as styled, useTheme } from '@material-ui/core/styles';
-import { Box, Button, Tab, Card, Grid, Divider, Container, Typography, Rating, Stack } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductById } from '../../redux/slices/productSlice';
-import { trackingViewCount, trackingViewTime } from '../../redux/slices/userBehaviorSlice';
 import * as api from '../../api';
 import { getRelatedItems } from '../../api/fpt';
+import { getProductById } from '../../redux/slices/productSlice';
+import { trackingViewCount, trackingViewTime } from '../../redux/slices/userBehaviorSlice';
 // hooks
-import { useLocales, useInterval } from '../../hooks';
+import { useInterval, useLocales } from '../../hooks';
 // components
-import Page from '../../components/Page';
 import LoadingScreen from '../../components/LoadingScreen';
 import Markdown from '../../components/Markdown';
-import { ProductDetailsReview } from '../../components/dashboard/product-details';
+import Page from '../../components/Page';
 import { CarouselThumbnail } from '../../components/carousel';
-import { ProductCarousel, ProductList, ProductVariantInfo, ProductSpecification } from '../../components/e-commerce';
+import { ProductDetailsReview } from '../../components/dashboard/product-details';
+import { ProductList, ProductSpecification, ProductVariantInfo } from '../../components/e-commerce';
 //
 import { fShortenNumber } from '../../utils/formatNumber';
 

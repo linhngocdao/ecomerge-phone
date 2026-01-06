@@ -204,8 +204,8 @@ export default function ProductForm() {
     setValue('pictures', filteredItems);
   };
 
-  const uploadFileToFirebase = (file) => {
-    return new Promise((resolve, reject) => {
+  const uploadFileToFirebase = (file) =>
+    new Promise((resolve, reject) => {
       if (typeof file === 'string') {
         resolve(file);
       } else {
@@ -218,7 +218,6 @@ export default function ProductForm() {
         );
       }
     });
-  };
 
   const uploadMultipleFilesToFirebase = (files) => {
     // Since firebaseUploadMultiple returns void and uses callbacks for individual URLs or one callback?
@@ -297,7 +296,7 @@ export default function ProductForm() {
         thumbnail: thumbnailUrl,
         pictures: pictureUrls,
         video: data.video,
-        overSpecs: overSpecs // Using overSpecs as primary specs
+        overSpecs // Using overSpecs as primary specs
       };
 
       await createProductMutation.mutateAsync(payload);

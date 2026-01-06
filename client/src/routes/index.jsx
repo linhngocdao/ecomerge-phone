@@ -5,8 +5,8 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 import MainLayout from '../layouts/main';
 // guards
-import AuthGuard from '../guards/AuthGuard.jsx';
-import GuestGuard from '../guards/GuestGuard.jsx';
+import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from '../guards/GuestGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';

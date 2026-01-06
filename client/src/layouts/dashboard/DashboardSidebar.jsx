@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { Link as RouterLink, Navigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
+import { Avatar, Box, Drawer, Link, Typography } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Avatar, Box, Link, Drawer, Typography } from '@material-ui/core';
 // hook
-import useLocales from '../../hooks/useLocales';
 import useAuth from '../../hooks/useAuth';
+import useLocales from '../../hooks/useLocales';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
-import LogoFull from '../../components/LogoFull';
-import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-import SvgIconStyle from '../../components/SvgIconStyle';
 import { MHidden } from '../../components/@material-extend';
+import LogoFull from '../../components/LogoFull';
+import NavSection from '../../components/NavSection';
+import Scrollbar from '../../components/Scrollbar';
+import SvgIconStyle from '../../components/SvgIconStyle';
 
 // ----------------------------------------------------------------------
 

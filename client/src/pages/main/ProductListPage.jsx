@@ -1,28 +1,28 @@
 // icons
-import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
+import { Icon } from '@iconify/react';
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
 import {
   Autocomplete,
   Box,
   Button,
-  Container,
   Card,
   CardContent,
+  Container,
   Grid,
   InputAdornment,
   Stack,
   TextField,
   Typography
 } from '@material-ui/core';
+import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { LoadingButton } from '@material-ui/lab';
 // hooks
-import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import useQuery from '../../hooks/useQuery';
 import useLocales from '../../hooks/useLocales';
+import useQuery from '../../hooks/useQuery';
 // components
 import Page from '../../components/Page';
 import { ProductList } from '../../components/e-commerce';
@@ -30,8 +30,8 @@ import { ProductList } from '../../components/e-commerce';
 import {
   initialSearch,
   searchProduct,
-  setSelectedCategories,
-  setSelectedBrands
+  setSelectedBrands,
+  setSelectedCategories
 } from '../../redux/slices/searchProductSlice';
 
 // ----------------------------------------------------------------------

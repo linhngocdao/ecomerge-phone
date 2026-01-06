@@ -1,30 +1,29 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // icon
-import { Icon } from '@iconify/react';
 import cart24Regular from '@iconify/icons-fluent/cart-24-regular';
 import history24Filled from '@iconify/icons-fluent/history-24-filled';
 import baselineLocationOn from '@iconify/icons-ic/baseline-location-on';
-import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
-import roundReceipt from '@iconify/icons-ic/round-receipt';
-import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import baselineSettings from '@iconify/icons-ic/baseline-settings';
+import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import roundReceipt from '@iconify/icons-ic/round-receipt';
+import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
+import { Icon } from '@iconify/react';
 // material
+import { AppBar, Box, Container, IconButton, Stack, Toolbar } from '@material-ui/core';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, IconButton, AppBar, Toolbar, Container, Stack, Divider } from '@material-ui/core';
 // hooks
-import { useOffSetTop, useLocales } from '../../hooks';
+import { useLocales, useOffSetTop } from '../../hooks';
 // components
+import { MBadge, MButton, MHidden } from '../../components/@material-extend';
 import Logo from '../../components/Logo';
 import LogoFull from '../../components/LogoFull';
-import { MBadge, MButton, MHidden } from '../../components/@material-extend';
 //
+import AccountPopover from '../common/AccountPopover';
+import LanguagePopover from '../common/LanguagePopover';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import SearchBar from './SearchBar';
-import AccountPopover from '../common/AccountPopover';
-import LanguagePopover from '../common/LanguagePopover';
 
 // ----------------------------------------------------------------------
 

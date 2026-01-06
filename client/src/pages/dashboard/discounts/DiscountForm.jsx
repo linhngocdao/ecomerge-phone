@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 
 import PropTypes from 'prop-types';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // material
 import {
   Button,
@@ -20,23 +20,23 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { Form, FormikProvider, useFormik } from 'formik';
-import { useSnackbar } from 'notistack';
-import * as Yup from 'yup';
 import { MobileDatePicker } from '@material-ui/lab';
+import { Form, FormikProvider, useFormik } from 'formik';
 import { merge } from 'lodash';
+import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 
 import { checkExistedDiscountCode } from '../../../api';
 
-import { UploadSingleFile } from '../../../components/upload';
-import { useLocales } from '../../../hooks';
-import { MotionInView, varFadeInUp } from '../../../components/animate';
 import { MIconButton, MRadio } from '../../../components/@material-extend';
-import { createDiscount, updateDiscount } from '../../../redux/actions/discounts';
+import { MotionInView, varFadeInUp } from '../../../components/animate';
 import LoadingScreen from '../../../components/LoadingScreen';
+import { UploadSingleFile } from '../../../components/upload';
 import { allowImageMineTypes } from '../../../constants/imageMineTypes';
 import { uploadSingleFile } from '../../../helper/uploadHelper';
+import { useLocales } from '../../../hooks';
+import { createDiscount, updateDiscount } from '../../../redux/actions/discounts';
 
 // ----------------------------------------------------------------------
 DiscountForm.propTypes = {
@@ -191,11 +191,6 @@ export default function DiscountForm({ currentId, open, setOpen }) {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const testUniqueCode = (code) => {
-    const a = '5';
-    return false;
   };
 
   const DiscountSchema = Yup.object().shape({
